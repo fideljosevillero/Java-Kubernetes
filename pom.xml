@@ -17,6 +17,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>student-service</module>
+        <module>Course</module>
     </modules>
 
     <properties>
