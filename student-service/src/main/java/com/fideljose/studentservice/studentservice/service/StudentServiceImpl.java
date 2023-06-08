@@ -18,12 +18,12 @@ public class StudentServiceImpl implements StudentService{
     @Override
     @Transactional(readOnly = true)
     public List<Student> findAllStudents() {
-        return (List<Student>) studentRepository.findAll();
+        return studentRepository.findAll();
     }
 
     @Override
-    public Optional<Student> saveStudent() {
-        return Optional.empty();
+    public Student saveStudent(Student student) {
+        return studentRepository.save(student);
     }
 
     @Override
@@ -35,4 +35,5 @@ public class StudentServiceImpl implements StudentService{
     public void deleteStudent() {
 
     }
+
 }

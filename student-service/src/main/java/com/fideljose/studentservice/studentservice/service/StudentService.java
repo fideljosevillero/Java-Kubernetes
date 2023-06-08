@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface StudentService {
 
     List<Student>  findAllStudents();
-    Optional<Student> saveStudent();
+    Student saveStudent(Student student);
     Optional<Student> findByIdStudent();
     void deleteStudent();
 }

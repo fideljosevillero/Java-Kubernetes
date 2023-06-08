@@ -1,12 +1,12 @@
 package com.fideljose.studentservice.studentservice.controller;
 
+import com.fideljose.studentservice.studentservice.model.entity.Student;
 import com.fideljose.studentservice.studentservice.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-@RestController(value = "/api/v1")
+@RestController
 public class StudentController {
 
     @Autowired
@@ -15,6 +15,10 @@ public class StudentController {
     @GetMapping("/")
     public ResponseEntity<?> getStudents(){
         return ResponseEntity.ok(service.findAllStudents());
-        //return ResponseEntity.ok("todo bien 2!!!");
+    }
+
+    @PostMapping("/")
+    public ResponseEntity<Student> saveStudent(Student student){
+        return ResponseEntity.ok(service.saveStudent(student));
     }
 }
