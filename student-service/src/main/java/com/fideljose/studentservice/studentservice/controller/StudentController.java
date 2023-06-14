@@ -4,7 +4,12 @@ import com.fideljose.studentservice.studentservice.model.entity.Student;
 import com.fideljose.studentservice.studentservice.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 public class StudentController {
@@ -18,7 +23,15 @@ public class StudentController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<Student> saveStudent(Student student){
+    public ResponseEntity<?> saveStudent(@Valid @RequestBody Student student
+            , BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            Map<String, String> errors = new HashMap<>();
+            bindingResult.getFieldErrors().forEach(e -> {
+                errors.put(e.getField(), "The field " + e.getField() + " " + e.getDefaultMessage());
+            });
+            return ResponseEntity.badRequest().body(errors);
+        }
         return ResponseEntity.ok(service.saveStudent(student));
     }
 }
