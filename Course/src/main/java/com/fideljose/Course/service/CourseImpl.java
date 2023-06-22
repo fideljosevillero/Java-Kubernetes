@@ -35,7 +35,7 @@ public class CourseImpl implements CourseService{
     @Transactional
     public Optional<StudentDto> assignStudentToCourse(StudentDto studentDto, Long courseId) {
         Optional<Course> course = getCourseExist(courseId);
-        Optional<StudentDto> student = getStudentExist(courseId);
+        Optional<StudentDto> student = getStudentExist(studentDto.getId());
         if(course.isPresent()
                 && student.isPresent()){
 
