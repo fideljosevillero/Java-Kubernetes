@@ -4,6 +4,8 @@ import com.fideljose.Course.Util.ValidateBody;
 import com.fideljose.Course.entity.StudentDto;
 import com.fideljose.Course.entity.model.Course;
 import com.fideljose.Course.service.CourseService;
+import feign.FeignException;
+import feign.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Collections;
 import java.util.Optional;
 
 @RestController
@@ -34,7 +37,13 @@ public class CourseController {
 
     @PutMapping("/assign-student/{courseId}")
     public ResponseEntity<?> assingStudentToCourse(@PathVariable Long courseId, @RequestBody StudentDto studentDto){
-        Optional<StudentDto> student =  service.assignStudentToCourse(studentDto, courseId);
+        Optional<StudentDto> student = null;
+        try{
+            student =  service.assignStudentToCourse(studentDto, courseId);
+        }catch(FeignException err){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Collections.singletonMap("Error Message ", "Comunications Error"));
+        }
         if(student.isPresent()){
             return ResponseEntity.status(HttpStatus.CREATED).body(student);
         }
