@@ -37,7 +37,7 @@ public class CourseController {
 
     @PutMapping("/assign-student/{courseId}")
     public ResponseEntity<?> assingStudentToCourse(@PathVariable Long courseId, @RequestBody StudentDto studentDto){
-        Optional<StudentDto> student = null;
+        Optional<StudentDto> student ;
         try{
             student =  service.assignStudentToCourse(studentDto, courseId);
         }catch(FeignException err){
@@ -46,6 +46,36 @@ public class CourseController {
         }
         if(student.isPresent()){
             return ResponseEntity.status(HttpStatus.CREATED).body(student);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @PostMapping("/create-student/{courseId}")
+    public ResponseEntity<?> createStudentToCourse(@PathVariable Long courseId, @RequestBody StudentDto studentDto){
+        Optional<StudentDto> student ;
+        try{
+            student =  service.createNewStudentToCourse(studentDto, courseId);
+        }catch(FeignException err){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Collections.singletonMap("Error Message ", "Comunications Error"));
+        }
+        if(student.isPresent()){
+            return ResponseEntity.status(HttpStatus.CREATED).body(student);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/delete-student/{courseId}")
+    public ResponseEntity<?> deleteStudentToCourse(@PathVariable Long courseId, @RequestBody StudentDto studentDto){
+        Optional<StudentDto> student ;
+        try{
+            student =  service.removeStudentToCourse(studentDto, courseId);
+        }catch(FeignException err){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Collections.singletonMap("Error Message ", "Comunications Error"));
+        }
+        if(student.isPresent()){
+            return ResponseEntity.status(HttpStatus.OK).body(student);
         }
         return ResponseEntity.notFound().build();
     }
