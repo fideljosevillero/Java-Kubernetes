@@ -34,5 +34,5 @@ public class Student {
 
     @NotEmpty
     private String password;
-
+    
 }
