@@ -10,6 +10,6 @@ public interface StudentService {
 
     List<Student>  findAllStudents();
     Student saveStudent(Student student);
-    Optional<Student> findByIdStudent();
+    Optional<Student> findByIdStudent(Long id);
     void deleteStudent();
 }

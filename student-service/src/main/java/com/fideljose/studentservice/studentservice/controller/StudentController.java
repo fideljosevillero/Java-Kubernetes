@@ -23,7 +23,7 @@ public class StudentController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<?> saveStudent(@Valid @RequestBody Student student
+    public ResponseEntity<?> createStudent(@Valid @RequestBody Student student
             , BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             Map<String, String> errors = new HashMap<>();
@@ -33,5 +33,10 @@ public class StudentController {
             return ResponseEntity.badRequest().body(errors);
         }
         return ResponseEntity.ok(service.saveStudent(student));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findStudent(@PathVariable Long id){
+        return ResponseEntity.ok( service.findByIdStudent(id));
     }
 }

@@ -38,9 +38,9 @@ public class Course {
         students = new ArrayList<>();
     }
 
-    public void addCourseStudent(CourseStudent courseStudent){ courseStudentList.add(courseStudent);   }
+    public void assignStudentToCourse(CourseStudent courseStudent){ courseStudentList.add(courseStudent);   }
 
-    public void removeCourseStudent(CourseStudent courseStudent){
+    public void removeStudentToCourse(CourseStudent courseStudent){
         courseStudentList.remove(courseStudent);
     }
 
