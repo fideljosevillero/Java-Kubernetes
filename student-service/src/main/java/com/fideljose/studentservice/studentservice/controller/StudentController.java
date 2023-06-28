@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -38,5 +39,10 @@ public class StudentController {
     @GetMapping("/{id}")
     public ResponseEntity<?> findStudent(@PathVariable Long id){
         return ResponseEntity.ok( service.findByIdStudent(id));
+    }
+
+    @GetMapping("/students")
+    public ResponseEntity<?> getListStudentByIds(@RequestParam List<Long> ids){
+        return ResponseEntity.ok().body(service.getListStudentByIds(ids));
     }
 }

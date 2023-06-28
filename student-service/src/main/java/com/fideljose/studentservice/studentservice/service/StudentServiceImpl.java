@@ -13,27 +13,32 @@ import java.util.Optional;
 public class StudentServiceImpl implements StudentService{
 
     @Autowired
-    private StudentRepository studentRepository;
+    private StudentRepository repository;
 
     @Override
     @Transactional(readOnly = true)
     public List<Student> findAllStudents() {
-        return studentRepository.findAll();
+        return repository.findAll();
     }
 
     @Override
     public Student saveStudent(Student student) {
-        return studentRepository.save(student);
+        return repository.save(student);
     }
 
     @Override
     public Optional<Student> findByIdStudent(Long id) {
-        return studentRepository.findById(id);
+        return repository.findById(id);
     }
 
     @Override
     public void deleteStudent() {
 
+    }
+
+    @Override
+    public List<Student> getListStudentByIds(Iterable<Long> ids) {
+        return repository.findAllById(ids);
     }
 
 }

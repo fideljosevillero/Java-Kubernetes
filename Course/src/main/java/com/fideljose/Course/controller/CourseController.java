@@ -5,7 +5,6 @@ import com.fideljose.Course.entity.StudentDto;
 import com.fideljose.Course.entity.model.Course;
 import com.fideljose.Course.service.CourseService;
 import feign.FeignException;
-import feign.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +13,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 public class CourseController {
@@ -25,6 +26,23 @@ public class CourseController {
     @GetMapping("/")
     public ResponseEntity<?> getCourses(){
         return ResponseEntity.ok(service.listCourse());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getCourseById(@PathVariable Long id){
+        //return ResponseEntity.ok(service.getCourseById(id));
+        Optional<Course> course = service.getCourseById(id);
+        if(course.isPresent()){
+            if(!course.get().getCourseStudentList().isEmpty()){
+                Course courseObj = course.get();
+                List<Long> ids = courseObj.getCourseStudentList().stream().map(std -> std.getIdStudent()).collect(Collectors.toList());
+                List<StudentDto> students = service.getStudentsListByIds(ids);
+                courseObj.setStudents(students);
+                return ResponseEntity.status(HttpStatus.OK).body(courseObj);
+            }
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @PostMapping("/")

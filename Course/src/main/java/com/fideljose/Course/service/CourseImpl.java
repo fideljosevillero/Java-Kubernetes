@@ -32,6 +32,16 @@ public class CourseImpl implements CourseService{
     }
 
     @Override
+    public Optional<Course> getCourseById(Long id) {
+        return repository.findById(id);
+    }
+
+    @Override
+    public List<StudentDto> getStudentsListByIds(List<Long> studentIds) {
+        return restClient.getListStudentByIds(studentIds);
+    }
+
+    @Override
     @Transactional
     public Optional<StudentDto> assignStudentToCourse(StudentDto studentDto, Long courseId) {
         Optional<Course> course = getCourseExist(courseId);
@@ -49,7 +59,6 @@ public class CourseImpl implements CourseService{
         }
         return Optional.empty();
     }
-
 
     @Override
     @Transactional

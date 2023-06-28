@@ -10,10 +10,12 @@ public interface CourseService {
 
     Course saveCourse(Course course);
     List<Course> listCourse();
+    Optional<Course> getCourseById(Long id);
 
     Optional<StudentDto> assignStudentToCourse(StudentDto studentDto, Long courseId);
     Optional<StudentDto> removeStudentToCourse(StudentDto studentDto, Long courseId);
     Optional<StudentDto> createNewStudentToCourse(StudentDto studentDto, Long courseId);
+    List<StudentDto> getStudentsListByIds(List<Long> studentIds);
 
 
 }

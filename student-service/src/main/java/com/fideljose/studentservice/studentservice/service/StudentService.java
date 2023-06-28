@@ -12,4 +12,5 @@ public interface StudentService {
     Student saveStudent(Student student);
     Optional<Student> findByIdStudent(Long id);
     void deleteStudent();
+    List<Student> getListStudentByIds(Iterable<Long> ids);
 }
