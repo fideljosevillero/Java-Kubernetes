@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 import java.util.Optional;
 
-@FeignClient(name = "student-service", url = "localhost:8001")
+@FeignClient(name = "student-service", url = "host.docker.internal:8001")
 public interface RestClient {
 
     @PostMapping("/")
