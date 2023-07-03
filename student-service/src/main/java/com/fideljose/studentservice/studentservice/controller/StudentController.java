@@ -29,7 +29,7 @@ public class StudentController {
         if(bindingResult.hasErrors()){
             Map<String, String> errors = new HashMap<>();
             bindingResult.getFieldErrors().forEach(e -> {
-                errors.put(e.getField(), "The field " + e.getField() + " " + e.getDefaultMessage());
+                errors.put(e.getField(), "The field - " + e.getField() + " " + e.getDefaultMessage());
             });
             return ResponseEntity.badRequest().body(errors);
         }
