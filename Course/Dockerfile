@@ -27,26 +27,27 @@
 #ENTRYPOINT ["java", "-jar", "./target/Course-0.0.1-SNAPSHOT.jar"]
 
 # 3
+ARG SERVICE_NAME=Course
 FROM openjdk:17-jdk-alpine as builder
-
-WORKDIR /app/Course
+ARG SERVICE_NAME
+WORKDIR /app/$SERVICE_NAME
 
 COPY ./pom.xml /app
-COPY ./Course/.mvn ./.mvn
-COPY ./Course/mvnw .
-COPY ./Course/pom.xml .
+COPY ./$SERVICE_NAME/.mvn ./.mvn
+COPY ./$SERVICE_NAME/mvnw .
+COPY ./$SERVICE_NAME/pom.xml .
 
 RUN ./mvnw clean package -Dmaven.test.skip -Dmaven.main.skip -Dspring-boot.repackage.skip && rm -r ./target/
 #RUN ./mvnw dependency:go-offline
-COPY ./Course/src ./src
+COPY ./$SERVICE_NAME/src ./src
 
 RUN ./mvnw clean package -DskipTests
 
 FROM openjdk:17-jdk-alpine
-
+ARG SERVICE_NAME
 WORKDIR /app
 
-COPY --from=builder /app/student/target/Course-0.0.1-SNAPSHOT.jar .
+COPY --from=builder /app/$SERVICE_NAME/target/Course-0.0.1-SNAPSHOT.jar .
 
 ENV PORT 8002
 
