@@ -45,7 +45,10 @@ services:
 
   student-service:
     container_name: student-service
-    image: student
+#    image: student
+    build:
+      context: ./
+      dockerfile: ./student-service/Dockerfile
     ports:
       - "8001:8001"
     env_file:
@@ -59,7 +62,10 @@ services:
 
   course-service:
     container_name: course-service
-    image: course
+#    image: course
+    build:
+      context: ./
+      dockerfile: ./Course/Dockerfile
     ports:
       - "8002:8002"
     env_file:
@@ -68,4 +74,6 @@ services:
       - network1
     depends_on:
       - postgresql14
+      - student-service
     restart: always
+
