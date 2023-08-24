@@ -1,0 +1,196 @@
+{
+	"info": {
+		"_postman_id": "55bd12e6-a1b9-45b1-bf7a-87878576deb2",
+		"name": "Java_Kubernetes",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Course save",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "default",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Kubernetes\",\r\n    \"address\": \"itagui\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host-course}}:8002/",
+					"protocol": "http",
+					"host": [
+						"{{host-course}}"
+					],
+					"port": "8002",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Course list",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{host-course}}:8002/",
+					"protocol": "http",
+					"host": [
+						"{{host-course}}"
+					],
+					"port": "8002",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get course by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{host-course}}:8002/1",
+					"protocol": "http",
+					"host": [
+						"{{host-course}}"
+					],
+					"port": "8002",
+					"path": [
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Course - assign student to course",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"name\": \"Fidel Villero de Hoyos\",\r\n    \"address\": \"prueba address\",\r\n    \"email\": \"fideljose17wa@tcs.com\",\r\n    \"password\": \"12klmfvfv\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host-course}}:8002/assign-student/1",
+					"protocol": "http",
+					"host": [
+						"{{host-course}}"
+					],
+					"port": "8002",
+					"path": [
+						"assign-student",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Student save",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Fidel Villero de Hoyos\",\r\n    \"address\": \"prueba address\",\r\n    \"email\": \"fideljose10-@tcs.com\",\r\n    \"password\": \"12klmfvfv\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host-student}}:8001",
+					"protocol": "http",
+					"host": [
+						"{{host-student}}"
+					],
+					"port": "8001"
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Student list",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{host-student}}:8001",
+					"protocol": "http",
+					"host": [
+						"{{host-student}}"
+					],
+					"port": "8001"
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List students by ids",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{host-student}}:8001/students?ids=1,2,3",
+					"protocol": "http",
+					"host": [
+						"{{host-student}}"
+					],
+					"port": "8001",
+					"path": [
+						"students"
+					],
+					"query": [
+						{
+							"key": "ids",
+							"value": "1,2,3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Student find by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{host-student}}:8001/1",
+					"protocol": "http",
+					"host": [
+						"{{host-student}}"
+					],
+					"port": "8001",
+					"path": [
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
