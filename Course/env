@@ -3,3 +3,4 @@ DB_HOST=postgresql14:5432
 DB_NAME=java-kubernetes-db-course
 DB_USERNAME=postgres
 DB_PASSWORD=1234567
+STUDENTS_URL=student-service

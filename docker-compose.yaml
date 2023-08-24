@@ -44,15 +44,21 @@ services:
 
 
   student-service:
-    container_name: student-service
-#    image: student
+    image: fideljose17/student-service
+#    container_name: student-service
     build:
       context: ./
       dockerfile: ./student-service/Dockerfile
     ports:
       - "8001:8001"
-    env_file:
-      - ./student-service/env
+    environment:
+      PORT: 8001
+      DB_HOST: mysql8:3306
+      DB_USERNAME: root
+      DB_PASSWORD: 1234567
+      DB_NAME: java-kubernetes-db
+#    env_file:
+#      - ./student-service/env
     networks:
       - network1
     depends_on:
@@ -61,15 +67,22 @@ services:
 
 
   course-service:
-    container_name: course-service
-#    image: course
+    image: fideljose17/course-service
+#    container_name: course-service
     build:
       context: ./
       dockerfile: ./Course/Dockerfile
     ports:
       - "8002:8002"
-    env_file:
-      - ./Course/env
+    environment:
+      PORT: 8002
+      DB_HOST: postgresql14:5432
+      DB_NAME: java-kubernetes-db-course
+      DB_USERNAME: postgres
+      DB_PASSWORD: 1234567
+      STUDENTS_URL: ec2-54-221-111-33.compute-1.amazonaws.com
+#    env_file:
+#      - ./Course/env
     networks:
       - network1
     depends_on:
