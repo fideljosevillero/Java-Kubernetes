@@ -44,6 +44,7 @@ services:
 
 
   student-service:
+    container_name: student-service
     image: fideljose17/student-service
 #    container_name: student-service
     build:
@@ -67,6 +68,7 @@ services:
 
 
   course-service:
+    container_name: course-service
     image: fideljose17/course-service
 #    container_name: course-service
     build:
@@ -80,7 +82,7 @@ services:
       DB_NAME: java-kubernetes-db-course
       DB_USERNAME: postgres
       DB_PASSWORD: 1234567
-      STUDENTS_URL: "http://127.0.0.1:53809/"
+      STUDENTS_URL: student-service:8001
 #    env_file:
 #      - ./Course/env
     networks:
