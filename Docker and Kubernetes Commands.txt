@@ -1,0 +1,152 @@
+---------------- Dockerfile ---------------------------
+FROM openjdk:17.0.2
+WORKDIR /app
+COPY /target/student-service-0.0.1-SNAPSHOT.jar .
+EXPOSE 8001
+ENTRYPOINT ["java", "-jar", "student-service-0.0.1-SNAPSHOT.jar"]
+---------------------------------------------------------------
+* Build maven project .jar file
+mvn clean package -DskipTests
+docker build -t student .
+docker build .
+mvn clean package -DskipTests
+docker run [imageId]
+docker run -p 8017:8001 [imageId] 
+	8017: para acceder fuera del contenedor
+	8001: el puerto que utiliza la aplicación y por ende este dentro del contenedor
+
+Optimizado el Dockerfile 
+	docker build -t student . -f .\student-service\Dockerfile
+	docker build -t student:version2 . -f .\student-service\Dockerfile
+	
+Delete
+	docker rm [containersID]
+	docker rmi [imageID, imageID2, imageID3]
+	docker container prune -> Elimina todos los contenedores
+	docker image prune -> Elimina todas las imagenes que estan sin utilizar
+	docker image prune -a -> Forza a elimina todas las imagenes 
+
+docker exec -it <mycontainer> bash
+docker exec -it <mycontainer> sh
+
+* Logs
+docker logs <container_id> -f
+docker logs <container_id> | grep -i error
+
+docker run -p 8081:8001 --name studentContanerName 1e06839f6689
+docker run -d -p 8001:8001 1e06839f6689 -> detach
+docker attach 2810720b31f6 -> attach
+docker run -p 8001:8001 -d --rm imageId -> Elimina al container cuando se detenga NO MUY FUNCIONAL
+
+Copiar archivos de local al container y del cotainer a local
+	docker cp .\pom.xml ccebcb9dddf7:/app/pom.xml
+	docker cp ccebcb9dddf7:/app/student-service-0.0.1-SNAPSHOT.jar C:\prueba
+	
+Ver detalles
+	docker image inspect imageId
+	docker container inspect containerId
+
+Redes
+	docker network create new_network
+	docker network ls
+	docker run -p 8001:8001 --network network1 --name student-service -d student: nombre del servicio (spring.application.name=student-service)
+	docker run -p 8002:8002 --network network1 --name course-service -d course
+	
+Cache
+	 docker build . --no-cache -f .\Course\Dockerfile
+
+mysql container
+	docker pull  mysql:8
+	docker run -p 3307:3306 --name mysql8 --network network1 -e MYSQL_ROOT_PASSWORD=1234567 -e MYSQL_DATABASE=java-kubernetes-db mysql:8
+	
+postgresql
+	docker pull postgres:15.3-alpine3.18
+	docker run -p 5532:5432 --network network1 --name postgresql14 -e POSTGRES_PASSWORD=1234567 -e POSTGRES_DB=java-kubernetes-db-course postgres:15.3-alpine3.18
+	
+Volumen (-v)
+	docker volume ls
+	docker run -p 3307:3306 --name mysql8 --network network1 -e MYSQL_ROOT_PASSWORD=1234567 -e MYSQL_DATABASE=java-kubernetes-db -d -v mysqlDB:/var/lib/mysql mysql:8
+	docker run -p 5532:5432 --network network1 --name postgresql14 -e POSTGRES_PASSWORD=1234567 -e POSTGRES_DB=java-kubernetes-db-course -d -v pgdataDB:/var/lib/postgresql/data postgres:15.3-alpine3.18
+	
+Utilitario: [solo para conectarse a otro contenedor, aprovechando que esta en la misma red]
+	docker run -it --rm --network network1 mysql:8 bash  [mysql:8 nombre de la imagen]
+		mysql -hmysql8 -uroot -p1234567 [mysql8 nombre del host/contenedor]
+	docker run --rm --network network1 postgres:15.3-alpine3.18 psql -h postgresql14 -U postgres -W 1234567 (No me funciono en local)
+	
+ENV (-e es igual a -env)
+	docker run -p 8001:8001 -env PORT=8001 --network network1 --name student-service -d student
+	docker run -p 8002:8002 -env PORT=8002 --network network1 --name course-service -d course
+ENV FILE 
+	docker run -p 8002:8002 -env-file .\Course\env PORT=8002 --network network1 --name course-service -d course
+ARG - ARGUMENTS
+	docker run -p 8001:8001 --build-arg PORT=8001 --network network1 --name student-service -d student
+	docker run -p 8002:8002 --build-arg PORT=8002 --network network1 --name course-service -d course
+	
+Docker-compose
+	docker-compose up -d
+	docker-compose up --build -d -> Forza a construir las imagenes
+	docker-compose stop
+	docker-compose down -V -> Elimina tambien los volumenes
+	docker-compose down
+
+Docker Hub
+	docker tag java-kubernetes-course-service fideljose17/course-service - Renombrar imagen - crea otra imagen identica con el nuevo nombre (course-service)
+	docker login
+	docker logout
+	docker push fideljose17/course-service
+	scp -i "spring-cloud.pem" docker-compose.yaml ec2-user@ec2-54-196-87-223.compute-1.amazonaws.com:/home/ec2-user (copiar achivo a la maquina reoto EC2)
+	mv docker-compose-1.yaml docker-compose.yaml -> Renonbrar el archivo
+	free -> comando para comprobar estado del servidor, RAM, CPU, BUFFER...
+	
+	
+	scp -i "Java_Kubernetes_Key_Pair.pem"  docker-compose.yaml ec2-user@ec2-18-194-230-197.eu-central-1.compute.amazonaws.com:/home/ec2-user
+	
+Docker install EC2
+	sudo yum update -y
+	sudo amazon-linux-extras install docker
+		Error:sudo: amazon-linux-extras: command not found
+		Fix: Check the Amazon image version of your EC2 instance.
+			Command: cat /etc/image-id
+			If it is Amazon Linux 2023, it does not have extras.
+			- sudo yum install docker
+	sudo service docker start
+	sudo docker version
+	Intslar docker-compose 
+		- sudo curl -L https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
+		- sudo chmod +x /usr/local/bin/docker-compose
+		- docker-compose version
+		- sudo ls -s /usr/local/bin/docker-compose /usr/bin/docker-compose -> Configurar de forma global
+
+Kubernetes: ****************************************
+
+Minikube:
+	Intellij: Admin
+		minikube status
+			minikube stop
+			minikube start
+Impertiva:
+	kubectl create deployment mysql8 --image=mysql:8 --port=3306 (faltan variables de ambiente pero CREATE no tiene forma de enviar variables de entorno)
+Declarativa:
+	- kubectl create deployment mysql8 --image=mysql:8 --port=3306 --dry-run=client -o yaml > deployment-mysql.yaml
+	- kubectl apply -f .\deployment-mysql.yaml
+	- kubectl get all
+	- kubectl create deployment mysql8 --image=mysql:8 --port=3306 --dry-run=client -o yaml > deployment-mysql.yaml
+		kubectl apply -f .\deployment-mysql.yaml
+	- kubectl create deployment student-service --image=fideljose17/student-service --port=8001 --dry-run=client -o yaml > deployment-student.yaml
+	- kubectl create deployment postgresql14 --image=postgres:15.3-alpine3.18 --port=5432 --dry-run=client -o yaml > deployment-postgresql.yaml
+	- kubectl create deployment course-service --image=fideljose17/course-service --port=8002 --dry-run=client -o yaml > deployment-course-service.yaml
+	- kubectl expose deployment mcsv-student --port=8001 --type=LoadBalancer -o ysml > msv-student.yaml
+	- minikube service student-service --url -> exponer endpoint del service
+	
+	
+Tips:
+	- Forma 1:
+		Reiniciar deployment:  kubectl rollout restart deployment [mysql8]
+	-Forma 2:
+		kubectl scale deployment mysql8 --replicas=0
+		kubectl scale deployment mysql8 --replicas=2
+	
+	
+	
+	
+Minikube dashboard
