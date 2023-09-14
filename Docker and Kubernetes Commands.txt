@@ -145,8 +145,9 @@ Tips:
 	-Forma 2:
 		kubectl scale deployment mysql8 --replicas=0
 		kubectl scale deployment mysql8 --replicas=2
-	
-	
-	
-	
 Minikube dashboard
+
+Volume:
+	kubectl get pv
+	kubectl get pvc
+	
