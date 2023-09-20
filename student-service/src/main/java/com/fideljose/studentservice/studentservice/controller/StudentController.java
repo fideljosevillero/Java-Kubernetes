@@ -3,6 +3,8 @@ package com.fideljose.studentservice.studentservice.controller;
 import com.fideljose.studentservice.studentservice.model.entity.Student;
 import com.fideljose.studentservice.studentservice.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +24,15 @@ public class StudentController {
     public ResponseEntity<?> getStudents(){
         return ResponseEntity.ok(service.findAllStudents());
     }
+
+    @Autowired
+    private ApplicationContext applicationContext;
+
+    @GetMapping("/crash")
+    public void crash(){
+        ((ConfigurableApplicationContext)applicationContext).close();
+    }
+
 
     @PostMapping("/")
     public ResponseEntity<?> createStudent(@Valid @RequestBody Student student
