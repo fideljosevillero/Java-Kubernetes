@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: postgresq-pvc
+  name: postgresql-pvc
 spec:
-  volumeName: postgresq-pv # name persistence volume
+  volumeName: postgresql-pv # name persistence volume
   accessModes:
     - ReadWriteOnce
   storageClassName: standard #kubectl get sc (Storage Class)

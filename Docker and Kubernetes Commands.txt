@@ -150,4 +150,14 @@ Minikube dashboard
 Volume:
 	kubectl get pv
 	kubectl get pvc
+	kubectl get configmap
+	
+configmap
+	kubectl apply -f configmap.yaml
+	kubectl get configmap
+	kubectl describe configmap student-configmap
+	
+secret
+	kubectl apply -f secrets.yaml
+	
 	
