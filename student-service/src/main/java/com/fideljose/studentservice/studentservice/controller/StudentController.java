@@ -63,6 +63,8 @@ public class StudentController {
 
     @GetMapping("/metadata-pod")
     public ResponseEntity<?> getPodMetadata(){
-        return  ResponseEntity.ok("Metadata: " + environment.getProperty("MY_POD_NAME") + " - " + environment.getProperty("MY_POD_IP"));
+        String metadata = "Metadata: " + environment.getProperty("MY_POD_NAME") + " - " + environment.getProperty("MY_POD_IP")
+                + " - " + environment.getProperty("config.text");
+        return  ResponseEntity.ok(metadata);
     }
 }

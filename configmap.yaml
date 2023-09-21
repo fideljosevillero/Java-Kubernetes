@@ -8,6 +8,9 @@ data:
   db_password: "1234567"
   db_name: java-kubernetes-db
   db_port: "3306"
+  application.properties: |-
+    config:
+      text: Configuring application.yaml data from configmap...
 
 ---
 apiVersion: v1
