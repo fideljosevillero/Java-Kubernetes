@@ -160,4 +160,7 @@ configmap
 secret
 	kubectl apply -f secrets.yaml
 	
+Excepcion al acceder al api de Kubernetes para descrubrir los demás servicios, dado que no tiene permisos:
+	- kubectl create clusterrolebinding admin --clusterrole=cluster-admin --serviceaccount=default:default
+	
 	
