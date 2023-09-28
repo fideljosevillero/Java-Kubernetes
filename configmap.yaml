@@ -11,6 +11,13 @@ data:
   application.properties: |-
     config:
       text: Configuring application.yaml data from configmap...
+    ---
+    spring:
+      config:
+      activate:
+        on-profile: dev
+    config:
+      text: Configuring dev
 
 ---
 apiVersion: v1
