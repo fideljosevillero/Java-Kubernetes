@@ -14,3 +14,7 @@ spring:
             - Path=/api/students/**
           filters:
             - StripPrefix=2 # api and students = 2 Prefix
+        - id: default_route
+          uri: https://google.com
+          predicates:
+            - Path=/**
