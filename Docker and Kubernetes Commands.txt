@@ -163,4 +163,27 @@ secret
 Excepcion al acceder al api de Kubernetes para descrubrir los demás servicios, dado que no tiene permisos:
 	- kubectl create clusterrolebinding admin --clusterrole=cluster-admin --serviceaccount=default:default
 	
+AWS Kubernetes 
+	https://docs.aws.amazon.com/eks/latest/userguide/creating-a-vpc.html#create-vpc
+	https://aws.amazon.com/es/cli/
+	https://github.com/kubernetes-sigs/aws-efs-csi-driver
+	https://git-scm.com/downloads
+	https://kubernetes.io/docs/concepts/storage/volumes/#csi
 	
+	
+
+https://tcsglobal.udemy.com/course/spring-boot-3-y-spring-framework-6-2023/learn/lecture/37037350?start=15#overview
+https://tcsglobal.udemy.com/course/certified-kubernetes-administrator-with-practice-tests/learn/lecture/14224074?start=15#overview
+https://tcsglobal.udemy.com/course/patrones-de-diseno-java/learn/lecture/15689806?start=5#overview
+https://tcsglobal.udemy.com/course/devops-y-microservicios-fundamentos/learn/lecture/30795838?start=1#overview
+https://tcsglobal.udemy.com/course/reactive-programming-in-modern-java-using-project-reactor/learn/lecture/23392699?start=0#overview
+https://tcsglobal.udemy.com/course/microservicios-api-management-wso2/learn/lecture/23539706?start=15#overview
+https://tcsglobal.udemy.com/course/azuredevopscloud/learn/lecture/29224790?start=0#overview
+https://tcsglobal.udemy.com/course/azure-devops-de-cero-a-experto/learn/lecture/26023168?start=0#overview
+https://tcsglobal.udemy.com/course/spring-security-zero-to-master/learn/lecture/34300930?start=0#overview
+https://tcsglobal.udemy.com/course/spring-framework-6-beginner-to-guru/learn/lecture/36069502?start=0#overview
+https://tcsglobal.udemy.com/course/curso-completo-junit-mockito-spring-boot-test/learn/lecture/25624200?start=0#overview
+https://tcsglobal.udemy.com/course/curso-jakartaee-java-ee-9-desde-cero-a-experto/learn/lecture/29470054?start=0#overview
+https://tcsglobal.udemy.com/course/certified-kubernetes-application-developer/learn/lecture/12299352?start=0#overview
+https://tcsglobal.udemy.com/course/master-pruebas-de-rendimiento-con-apache-jmeter-espanol/learn/lecture/28698576?start=0#overview
+https://tcsglobal.udemy.com/course/istio-service-mesh-masterclass-kubernetes-aws-eks-2020/learn/lecture/21870212?start=0#overview
